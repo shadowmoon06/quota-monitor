@@ -1,0 +1,113 @@
+:root {
+  --q-green: #5ec24a;
+  --q-yellow: #f2c037;
+  --q-red: #e5533d;
+  --px: 2px;
+  --border: var(--vscode-panel-border, #4446);
+}
+
+body {
+  padding: 8px 10px 12px;
+  margin: 0;
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background, transparent);
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+}
+
+.windows {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.windows button {
+  flex: 1;
+  font: inherit;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 3px 0;
+  cursor: pointer;
+  color: var(--vscode-foreground);
+  background: var(--vscode-button-secondaryBackground, #3336);
+  border: none;
+  box-shadow: inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 #0005;
+}
+.windows button.on {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  box-shadow: inset var(--px) var(--px) 0 #0005;
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  cursor: pointer;
+  box-shadow: 0 0 0 var(--px) #000a, var(--px) var(--px) 0 var(--px) #0006;
+}
+
+.caption {
+  margin: 8px 0 4px;
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.agent {
+  margin-top: 8px;
+  padding: 6px 8px;
+  border: var(--px) solid var(--border);
+  box-shadow: var(--px) var(--px) 0 #0004;
+}
+.agent.off { opacity: 0.6; }
+.hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.sw {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}
+.right { margin-left: auto; font-weight: normal; text-transform: none; letter-spacing: 0; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  margin: 2px 0;
+}
+.row b { margin-left: auto; }
+.dim { opacity: 0.6; }
+.small { font-size: 10px; }
+.hint { margin-top: 4px; }
+
+.quota { margin-top: 6px; }
+.bar {
+  display: flex;
+  gap: 1px;
+  padding: var(--px);
+  background: #0006;
+}
+.bar i {
+  flex: 1;
+  height: 6px;
+  background: #ffffff14;
+}
+
+.footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.6;
+}
+.footer a { color: var(--vscode-textLink-foreground); }

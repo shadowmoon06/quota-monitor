@@ -1,0 +1,95 @@
+{
+  "name": "pixel-quota-tree",
+  "displayName": "Pixel Quota Tree",
+  "description": "Grow a pixel-art tree from your AI coding agent token usage (Claude Code, Codex, ...).",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Visualization", "Other"],
+  "main": "./out/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        { "id": "quotaTree", "title": "Quota Tree", "icon": "media/tree-icon.svg" }
+      ]
+    },
+    "views": {
+      "quotaTree": [
+        { "type": "webview", "id": "quotaTree.view", "name": "Usage Tree" }
+      ]
+    },
+    "commands": [
+      { "command": "quotaTree.refresh", "title": "Quota Tree: Refresh", "icon": "$(refresh)" },
+      { "command": "quotaTree.selectWindow", "title": "Quota Tree: Select Time Window" },
+      { "command": "quotaTree.open", "title": "Quota Tree: Show Tree" }
+    ],
+    "menus": {
+      "view/title": [
+        { "command": "quotaTree.refresh", "when": "view == quotaTree.view", "group": "navigation" }
+      ]
+    },
+    "configuration": {
+      "title": "Pixel Quota Tree",
+      "properties": {
+        "quotaTree.window": {
+          "type": "string",
+          "enum": ["5h", "today", "7d", "30d"],
+          "default": "5h",
+          "description": "Time window whose usage is shown as leaves."
+        },
+        "quotaTree.refreshIntervalSeconds": {
+          "type": "number",
+          "default": 30,
+          "minimum": 5,
+          "description": "How often agent logs are rescanned (only new bytes are parsed)."
+        },
+        "quotaTree.countCacheReads": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include cache-read tokens in totals. They are cheap and usually dwarf everything else, so they are excluded by default."
+        },
+        "quotaTree.tokensPerLeaf": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Tokens represented by one leaf. 0 = automatic, based on the selected window."
+        },
+        "quotaTree.claude.tokenBudget5h": {
+          "type": "number",
+          "default": 0,
+          "description": "Optional Claude Code token budget for a rolling 5h window (0 = off). Claude Code logs do not contain plan limits, so set your own to get a quota bar."
+        },
+        "quotaTree.claude.tokenBudgetWeekly": {
+          "type": "number",
+          "default": 0,
+          "description": "Optional Claude Code token budget for a rolling 7-day window (0 = off)."
+        },
+        "quotaTree.claude.dataDirs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Override Claude Code data directories (folders containing 'projects'). Default: $CLAUDE_CONFIG_DIR, ~/.claude, ~/.config/claude."
+        },
+        "quotaTree.codex.dataDirs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Override Codex home directories. Default: $CODEX_HOME or ~/.codex."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npx @vscode/vsce package --allow-missing-repository --no-rewrite-relative-links",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}
